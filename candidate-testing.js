@@ -8,9 +8,9 @@ const questionsAndCorrectAnswers = initializeQuestions();
 let question;
 let correctAnswer;
 let candidateAnswer;
-let questions;
-let correctAnswers;
-let candidateAnswers;
+let questions = questionsAndCorrectAnswers.keys();
+let correctAnswers = questionsAndCorrectAnswers.values();
+let candidateAnswers = [];
 
 // TODO 1.1a: Define candidateName // 
 // TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
@@ -30,15 +30,13 @@ function initializeQuestions()
 function askForName() 
 {
   // TODO 1.1b: Ask for candidate's name //
-  let name = input.question( "What is your name? " );
-  if ( name.trim().length == 0 )
+  candidateName = input.question( "\n\nWhat is your name? " );
+  if ( candidateName.trim().length == 0 )
   {
     console.log( "Name required.  Exiting." );
     exit();
   }
-  console.log( "Welcome, " + name + "!\n" );
-
-  return name;
+  console.log( "Welcome, " + candidateName + "!\n\n" );
 }
 
 function askQuestion() 
@@ -46,29 +44,47 @@ function askQuestion()
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
   if ( questionsAndCorrectAnswers.size == 0 )
   {
-    console.log( "There are no questions.  Exiting." );
+    console.log( "There are no questions.  Exiting.\n" );
     exit();
   }
-  console.log( "questionsAndCorrectAnswers size: " + questionsAndCorrectAnswers.size );
 
-  let candidateAnswers = [];
   for ( let question of questionsAndCorrectAnswers.keys() )
   {
     let ans = input.question( question );
 
     candidateAnswers.push( ans );
   }
-
-  //return candidateAnswers;
 }
 
-function gradeQuiz(candidateAnswers) {
-
+function gradeQuiz(candidateAnswers) 
+{
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
+  let grade = 0;
+  let counter = 0;
+  console.log( "\n\n" );
+  for ( question of questionsAndCorrectAnswers.keys() )
+  {
+    correctAnswer = questionsAndCorrectAnswers.get( question );
+    candidateAnswer = candidateAnswers[counter];
 
-
-  let grade;
-  
+    counter++;
+    console.log( "Question #" + counter + ": " + question );
+    if ( typeof candidateAnswer === 'undefined' || candidateAnswer.trim().length == 0 )
+    {
+      console.log( "Your answer:  Unanswered\n\n" );
+    }
+    else if ( candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase() )
+    {
+      grade++;
+      console.log( "Correct answer!  " + correctAnswer + "\n\n" );
+    }
+    else
+    {
+      console.log( "Incorrect answer.\nYour answer: " + candidateAnswer + 
+        "\nCorrect answer: " + correctAnswer + "\n\n" );
+    }
+  }
+  grade = grade * 20;
 
   return grade;
 }
@@ -79,11 +95,15 @@ function runProgram()
   // TODO 1.1c: Ask for candidate's name //
   
   askQuestion();
-  gradeQuiz(this.candidateAnswers);
+  let grade = gradeQuiz(this.candidateAnswers);
 
-  for ( let ans of this.candidateAnswers )
+  if ( grade >= 60 )
   {
-    console.log( "Provided answer: " + ans );
+    console.log( "\nYou scored " + grade + "%.  You passed!" );
+  }
+  else
+  {
+    console.log( "\nYou scored " + grade + "%.  You failed!" );
   }
 }
 

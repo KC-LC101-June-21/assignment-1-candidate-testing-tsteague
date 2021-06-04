@@ -18,11 +18,11 @@ let candidateAnswers = [];
 function initializeQuestions() 
 {
   let qAndAMap = new Map();
-  qAndAMap.set( 'Who was the first American woman in space?  ', 'Sally Ride' );
-  qAndAMap.set( 'True or false: 5 kilometer == 5000 meters?  ', 'true' );
-  qAndAMap.set( '(5 + 3)/2 * 10 = ?  ', '40' );
-  qAndAMap.set( 'Given the array[8, \'Orbit\', \'Trajectory\', 45], what entry is at index 2?  ', 'Trajectory' );
-  qAndAMap.set( 'What is the minimum crew size for the ISS?  ', '3' );
+  qAndAMap.set( 'Who was the first American woman in space?', 'Sally Ride' );
+  qAndAMap.set( 'True or false: 5 kilometer == 5000 meters?', 'true' );
+  qAndAMap.set( '(5 + 3)/2 * 10 = ?', '40' );
+  qAndAMap.set( 'Given the array[8, \'Orbit\', \'Trajectory\', 45], what entry is at index 2?', 'Trajectory' );
+  qAndAMap.set( 'What is the minimum crew size for the ISS?', '3' );
 
   return qAndAMap;
 }

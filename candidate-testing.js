@@ -48,7 +48,7 @@ function askQuestion()
     exit();
   }
 
-  for ( let question of questionsAndCorrectAnswers.keys() )
+  for ( question of questionsAndCorrectAnswers.keys() )
   {
     let ans = input.question( question );
 

@@ -1,22 +1,6 @@
-// I'm going to rewrite this to conform to the individual assignment
-// just want to challenge myself for now
-
 const input = require('readline-sync');
 
-let candidateName;
-const questionsAndCorrectAnswers = initializeQuestions();
-let question;
-let correctAnswer;
-let candidateAnswer;
-let questions = questionsAndCorrectAnswers.keys();
-let correctAnswers = questionsAndCorrectAnswers.values();
-let candidateAnswers = [];
-
-// TODO 1.1a: Define candidateName // 
-// TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
-// TODO 2: modify your quiz app to ask 5 questions //
-function initializeQuestions() 
-{
+const questionsAndAnswers = (function () {
   let qAndAMap = new Map();
   qAndAMap.set( 'Who was the first American woman in space?', 'Sally Ride' );
   qAndAMap.set( 'True or false: 5 kilometer == 5000 meters?', 'true' );
@@ -25,16 +9,31 @@ function initializeQuestions()
   qAndAMap.set( 'What is the minimum crew size for the ISS?', '3' );
 
   return qAndAMap;
-}
+})();
+
+let candidateName = "";
+let question = "";
+let correctAnswer = "";
+let candidateAnswer = "";
+let questions = [];
+let correctAnswers = [];
+let candidateAnswers = [];
+
+// TODO 1.1a: Define candidateName // 
+// TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
+// TODO 2: modify your quiz app to ask 5 questions //
 
 function askForName() 
 {
   // TODO 1.1b: Ask for candidate's name //
-  candidateName = input.question( "\n\nWhat is your name? " );
-  if ( candidateName.trim().length == 0 )
+  let userName = "";
+  while ( candidateName.trim().length === 0 )
   {
-    console.log( "Name required.  Exiting." );
-    exit();
+    userName = input.question( "\n\nWhat is your name? " );
+    if ( userName.trim().length > 0 )
+    {
+      candidateName = userName.trim();
+    }
   }
   console.log( "Welcome, " + candidateName + "!\n\n" );
 }
@@ -42,17 +41,21 @@ function askForName()
 function askQuestion() 
 {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
-  if ( questionsAndCorrectAnswers.size == 0 )
+  if ( questionsAndAnswers.size == 0 )
   {
-    console.log( "There are no questions.  Exiting.\n" );
-    exit();
+    console.log( "There are no questions.\n" );
   }
-
-  for ( question of questionsAndCorrectAnswers.keys() )
+  else
   {
-    let ans = input.question( question );
+    questions = Array.from( questionsAndAnswers.keys() );
+    correctAnswers = questionsAndAnswers.values();
 
-    candidateAnswers.push( ans );
+    for ( question of questions )
+    {
+      let ans = input.question( question );
+
+      candidateAnswers.push( ans.toLowerCase().trim() );
+    }
   }
 }
 
@@ -61,10 +64,10 @@ function gradeQuiz(candidateAnswers)
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
   let grade = 0;
   let counter = 0;
-  console.log( "\n\n" );
-  for ( question of questionsAndCorrectAnswers.keys() )
+  
+  for ( question of questionsAndAnswers.keys() )
   {
-    correctAnswer = questionsAndCorrectAnswers.get( question );
+    correctAnswer = questionsAndAnswers.get( question );
     candidateAnswer = candidateAnswers[counter];
 
     counter++;

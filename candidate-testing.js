@@ -11,13 +11,15 @@ const questionsAndAnswers = (function () {
   return qAndAMap;
 })();
 
-let candidateName = "";
-let question = "";
-let correctAnswer = "";
-let candidateAnswer = "";
-let questions = [];
-let correctAnswers = [];
-let candidateAnswers = [];
+let candidateName = "Participant";
+let questions = ['Who was the first American woman in space? ', 'True or false: 5 kilometer == 5000 meters? ',
+  '(5 + 3)/2 * 10 = ? ', 'Given the array[8, \'Orbit\', \'Trajectory\', 45], what entry is at index 2? ',
+  'What is the minimum crew size for the ISS? '];
+let correctAnswers = [ 'Sally Ride', 'true', '40', 'Trajectory', '3'];
+let candidateAnswer = "sally ride";
+let question = "Who was the first American woman in space?";
+let correctAnswer = "sally ride";
+let candidateAnswers = [ 'Sally Ride', 'true', '40', 'Trajectory', '3'];
 
 // TODO 1.1a: Define candidateName // 
 // TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
@@ -27,7 +29,7 @@ function askForName()
 {
   // TODO 1.1b: Ask for candidate's name //
   let userName = "";
-  while ( candidateName.trim().length === 0 )
+  while ( candidateName.trim().length === 0 || candidateName.trim() === "Participant" )
   {
     userName = input.question( "\n\nWhat is your name? " );
     if ( userName.trim().length > 0 )
@@ -55,6 +57,10 @@ function askQuestion()
       let ans = input.question( question );
 
       candidateAnswers.push( ans.toLowerCase().trim() );
+      if ( candidateAnswers.length > 5 )
+      {
+        candidateAnswers.shift();
+      }
     }
   }
 }

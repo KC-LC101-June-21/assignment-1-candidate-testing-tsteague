@@ -12,9 +12,9 @@ const questionsAndAnswers = (function () {
 })();
 
 let candidateName = "Participant";
-let questions = ['Who was the first American woman in space?', 'True or false: 5 kilometer == 5000 meters?',
-  '(5 + 3)/2 * 10 = ?', 'Given the array[8, \'Orbit\', \'Trajectory\', 45], what entry is at index 2?',
-  'What is the minimum crew size for the ISS?'];
+let questions = ['Who was the first American woman in space? ', 'True or false: 5 kilometer == 5000 meters? ',
+  '(5 + 3)/2 * 10 = ? ', 'Given the array[8, \'Orbit\', \'Trajectory\', 45], what entry is at index 2? ',
+  'What is the minimum crew size for the ISS? '];
 let correctAnswers = [ 'Sally Ride', 'true', '40', 'Trajectory', '3'];
 let candidateAnswer = "sally ride";
 let question = "Who was the first American woman in space?";
@@ -31,7 +31,7 @@ function askForName()
   let userName = "";
   while ( candidateName.trim().length === 0 || candidateName.trim() === "Participant" )
   {
-    userName = input.question( "\n\nWhat is your name? " );
+    userName = input.question( "\nWhat is your name? " );
     if ( userName.trim().length > 0 )
     {
       candidateName = userName.trim();
@@ -71,29 +71,29 @@ function gradeQuiz(candidateAnswers)
   let grade = 0;
   let counter = 0;
   
+  console.log( `\nCandidate Name: ${candidateName}` );
   for ( question of questionsAndAnswers.keys() )
   {
     correctAnswer = questionsAndAnswers.get( question );
     candidateAnswer = candidateAnswers[counter];
 
     counter++;
-    console.log( "Question #" + counter + ": " + question );
+    console.log( `${counter}) ${question}` );
     if ( typeof candidateAnswer === 'undefined' || candidateAnswer.trim().length == 0 )
     {
-      console.log( "Your answer:  Unanswered\n\n" );
-    }
-    else if ( candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase() )
-    {
-      grade++;
-      console.log( "Correct answer!  " + correctAnswer + "\n\n" );
+      console.log( "Your Answer:  Unanswered" );
     }
     else
     {
-      console.log( "Incorrect answer.\nYour answer: " + candidateAnswer + 
-        "\nCorrect answer: " + correctAnswer + "\n\n" );
+      console.log( `Your Answer: ${candidateAnswer}`  );
+    }
+
+    console.log( `Correct answer:  ${correctAnswer}\n` );
+    if ( typeof candidateAnswer !== 'undefined' && candidateAnswer.trim().toLowerCase() === correctAnswer.toLowerCase() )
+    {
+      grade++;
     }
   }
-  grade = grade * 20;
 
   return grade;
 }
@@ -106,13 +106,14 @@ function runProgram()
   askQuestion();
   let grade = gradeQuiz(this.candidateAnswers);
 
+  console.log( `>>> Overall Grade: ${grade * 20}% (${grade} of 5 responses correct) <<<` );
   if ( grade >= 60 )
   {
-    console.log( "\nYou scored " + grade + "%.  You passed!" );
+    console.log( ">>> Status: PASSED <<<" );
   }
   else
   {
-    console.log( "\nYou scored " + grade + "%.  You failed!" );
+    console.log( ">>> Status: FAILED <<<" );
   }
 }
 
